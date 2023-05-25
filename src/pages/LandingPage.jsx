@@ -1,11 +1,11 @@
-import { FcGoogle, Button, buttonSX } from '@constants'
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useAuth , getcurrentUser } from "@FireContext"
+import { useAuth, getcurrentUser } from "@FireContext"
+import GoogleButton from 'react-google-button';
+import upload from '../assets/upload.svg';
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  // const type = ["Fast", "Secure", "Reliable"]
   const currentUser = getcurrentUser();
   const { popupGoogle } = useAuth();
 
@@ -14,24 +14,24 @@ const LandingPage = () => {
   }
 
   useEffect(() => {
-    if (currentUser ) {navigate("/home")}
+    if (currentUser) { navigate("/home") }
   }, [currentUser?.uid]);
-  
+
   return (
-    <div className="landing-page">
-      <div className="left">
-        <div className="glass" />
-        <h1>Welcome to MyDrive.<p style={{color:'#8739F9'}}>Fast & Secure</p></h1>
-        <Button
-          onClick={handleClick}
-          variant="outlined"
-          startIcon={<FcGoogle />}
-          sx={buttonSX}
-        >
-          Sign in with Google
-        </Button>
+    <>
+      <div className="landing-page">
+        <div className="left">
+          <div className="gradient" />
+          <h1>Welcome to MyDrive.</h1>
+          <p style={{ color: '#8739F9', textAlign: 'center' }}>Fast & Secure</p>
+          <h3>Here you can upload all your files free of cost and access them from anywhere anytime.</h3>
+            <GoogleButton onClick={handleClick} />  
+        </div>
+        <div className="right">
+          <img style={{ marginRight: '2rem' }} src={upload} alt="" width='500px' />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

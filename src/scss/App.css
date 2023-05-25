@@ -4,11 +4,11 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #F2F5F5;
+  background-color: #f2f5f5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #8739F9;
+  background-color: #8739f9;
   border-radius: 3px;
 }
 
@@ -20,23 +20,24 @@
 }
 
 body {
-  background: #F2F5F5;
+  background: #f2f5f5;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(11px);
-  -webkit-backdrop-filter: blur(11px);
-  border-radius: 50px;
-  border: 1px solid #8739F9;
-  min-height: 20rem;
-  min-width: 40rem;
+.gradient {
+  height: 88vh;
+  max-height: 88vh;
   z-index: -1;
+  width: 100%;
+  max-width: 640px;
+  background-image: radial-gradient(at 27% 37%, hsl(215, 98%, 61%) 0px, transparent 0%), radial-gradient(at 97% 21%, hsl(125, 98%, 72%) 0px, transparent 50%), radial-gradient(at 52% 99%, hsl(354, 98%, 61%) 0px, transparent 50%), radial-gradient(at 10% 29%, hsl(256, 96%, 67%) 0px, transparent 50%), radial-gradient(at 97% 96%, hsl(38, 60%, 74%) 0px, transparent 50%), radial-gradient(at 33% 50%, hsl(222, 67%, 73%) 0px, transparent 50%), radial-gradient(at 79% 53%, hsl(343, 68%, 79%) 0px, transparent 50%);
   position: absolute;
-  top: 19%;
+  content: "";
+  width: 100%;
+  filter: blur(100px) saturate(150%);
+  top: 80px;
+  opacity: 0.15;
 }
 
 #search {
@@ -60,14 +61,19 @@ body {
   display: flex;
   flex: 1;
   flex-flow: column nowrap;
-  align-items: center;
-  gap: 2rem;
+  align-items: start;
   width: auto;
 }
+.landing-page .left h1 {
+  font-size: 4rem;
+}
 .landing-page .left p {
-  width: 90%;
   font-size: xx-large;
-  font-weight: 900;
+}
+.landing-page .left h3 {
+  font-weight: 100;
+  width: 30rem;
+  margin-bottom: 4rem;
 }
 
 .form-container {
@@ -85,7 +91,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #F2F5F5;
+  background-color: #f2f5f5;
   box-shadow: 10px 10px 10px rgba(170, 170, 170, 0.6823529412);
 }
 nav .rnav {
