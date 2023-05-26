@@ -113,4 +113,13 @@ nav .r_nav {
 .files {
   margin-top: 8rem;
   padding: 1rem;
+}
+
+.file-button {
+  height: 3rem;
+  flex-grow: 1;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
 }/*# sourceMappingURL=App.css.map */

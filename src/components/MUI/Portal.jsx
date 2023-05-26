@@ -9,6 +9,7 @@ import { useStore, getcurrentUser } from '@FireContext';
 import { useSelector, useDispatch } from 'react-redux'
 import { toggle } from '../../redux/slices/portalSlice'
 import { useParams } from 'react-router-dom';
+import { refresh } from '../../redux/slices/updateSlice';
 
 export default function Portal() {
   let { folderId } = useParams();
@@ -17,6 +18,7 @@ export default function Portal() {
   if (folderId === undefined) { folderId = "home" }
 
   const open = useSelector((state) => state.portal.value)
+  
   let { path,pathName } = useSelector((state) => state.path.value)
   const [name, setName] = React.useState("");
 
@@ -30,8 +32,9 @@ export default function Portal() {
 
   const handleCreate = async () => {
     if (pathName === undefined) { pathName = "home" }
-    createFolder(currentUser.uid, { name, path, pathName }, folderId)
+    await createFolder(currentUser.uid, { name, path, pathName }, folderId)
     setName("")
+    dispatch(refresh())
     dispatch(toggle())
   };
 

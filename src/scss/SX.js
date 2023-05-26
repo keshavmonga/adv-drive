@@ -1,6 +1,7 @@
 const primary = "#8739F9"
 const secondary = "#37b9f1"
 const offWhite = "#F2F5F5"
+
 export const buttonSX = {
   px: 4,
   borderRadius: 5,
@@ -55,3 +56,24 @@ export const SearchSX = {
   }
 }
 
+export const gridSX = {
+  borderBottom: '1px solid grey',
+  '&:hover': {
+    cursor: 'pointer',
+    background: 'lightgrey',
+    boxShadow: 1,
+  }
+}
+export const gridButtonSX = {
+  gap: `max(1rem , calc(100% - 38rem))`,
+  background: 'none',
+}
+export const gridAvatarSX = {
+  display: { xs: 'none', sm: 'none', md: 'flex', lg: 'flex' },
+  backgroundColor: 'none',
+  borderRadius: 3,
+  '&:hover': {
+    boxShadow: 2,
+    backgroundColor: '#F2F5F5',
+  }
+}

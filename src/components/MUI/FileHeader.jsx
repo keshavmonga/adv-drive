@@ -6,8 +6,6 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
     background: '#F2F5F5',
     textAlign: 'center',
     padding: theme.spacing(2),
@@ -37,15 +35,15 @@ export default function FileHeader() {
         <>
             <Box sx={{ width: '100%', margin: 'auto' }}>
                 <Grid container justifyContent="center" rowSpacing={1} sx={gridSX} columnSpacing={{ xs: 1, sm: 2, md: 1 }}>
-                    <Grid xs sm={4.5}>
+                    <Grid xs md={4.5} onClick={()=>{console.log("object")}}>
                         <Item sx={sx}>name</Item></Grid>
-                    <Grid xs sm display={responsive}>
+                    <Grid xs md display={responsive}>
                         <Item sx={sx}>size</Item>
                     </Grid>
-                    <Grid xs sm display={responsive}>
+                    <Grid xs md display={responsive}>
                         <Item sx={sx}>Date</Item>
                     </Grid>
-                    <Grid xs={2} sm={4}>
+                    <Grid xs={2} md={4}>
                         <Item sx={sx}>More</Item>
                     </Grid>
                 </Grid>

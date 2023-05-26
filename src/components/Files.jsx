@@ -4,69 +4,52 @@ import { useStore, getcurrentUser } from '@FireContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { loading } from '../redux/slices/loaderSlice.js'
-import { updatePath } from '../redux/slices/pathSlice.js'
 import { Box } from '@mui/material'
 import FileHeader from './MUI/FileHeader.jsx'
 
 const Files = () => {
 
+  const currentUser = getcurrentUser();
+  
+  const { getUserData } = useStore();
+
   let { folderId } = useParams();
 
   if (folderId === undefined) { folderId = 'home' }
-
+  
   const loader = useSelector((state) => state.loader.value)
-  const { path, pathName } = useSelector((state) => state.path.value)
+  const update = useSelector((state) => state.update.value)
   const dispatch = useDispatch();
+
   const [data, setdata] = useState(null);
 
 
-  const navigate = useNavigate();
 
-  const getProps = (doc, type) => {
-    if (type === 'folder') {
-      return {
-        size: '-',
-        did: doc.idx,
-        uid: currentUser?.uid,
-        url: doc.idx,
-        name: doc.name,
-        ext: doc.ext,
-        date: doc.createdOn?.seconds * 1000,
-      }
-    }
+  const getProps = (doc) => {
     return {
-      size: doc.size,
-      isFavorite: doc.isFavorite,
-      did: doc.idx,
+      size: doc?.size ?? '-',
+      isFavorite: doc?.isFavorite ?? null ,
+      did: doc?.idx,
       uid: currentUser?.uid,
-      url: doc.downloadUrl,
-      name: doc.displayName,
-      ext: doc.ext,
-      date: doc.uploadedOn?.seconds * 1000,
+      url: doc?.downloadUrl || doc.idx,
+      name: doc?.displayName ?? doc?.name,
+      ext: doc?.ext,
+      date: doc?.uploadedOn?.seconds * 1000 || doc?.createdOn?.seconds * 1000,
     }
   }
 
 
-  const currentUser = getcurrentUser();
-
-  const { getUserData } = useStore();
 
   const handle = async () => {
     const [a, b] = await getUserData(currentUser?.uid, folderId);
     setdata({a,b})
   }
 
-  const handlenav = (idx, fname) => {
-    const newPath = [...path, idx]
-    const newPathName = [...pathName, fname]
-    dispatch(updatePath({ path: newPath, pathName: newPathName }))
-    navigate(`/home/folder/${idx}`)
-  }
-
 
   useEffect(() => {
     handle()
-  }, [folderId]);
+    dispatch(loading(false))
+  }, [folderId,update]);
 
   return (
     <>

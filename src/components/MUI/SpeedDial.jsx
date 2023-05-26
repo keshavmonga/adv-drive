@@ -9,7 +9,9 @@ import { useStore , getcurrentUser } from '@FireContext';
 import { useSelector, useDispatch } from 'react-redux'
 import { toggle } from '../../redux/slices/portalSlice'
 import { snackOn , snackOff } from '../../redux/slices/snackSlice'
+import { loading } from '../../redux/slices/loaderSlice';
 import Portal from './Portal';
+import { refresh } from '../../redux/slices/updateSlice';
 import { useParams } from 'react-router-dom';
 
 
@@ -27,19 +29,21 @@ export default function SpeedDialMenu() {
   const { uploadFile  } = useStore();
 
   const portal = useSelector((state) => state.portal.value)
+
   const dispatch = useDispatch()
   const inputRef = React.useRef();
 
   const handle = () => setOpen((prev) => !prev);
 
   const handleChange = (e) => {
+    e.stopPropagation();
+    dispatch(loading(true))
     setFile(e.target.files[0])
     setMeta({
       name: e.target.files[0]?.name,
       type: e.target.files[0]?.type,
       size: e.target.files[0]?.size,
     })
-    e.stopPropagation();
   }
 
   const actions = [
@@ -51,6 +55,7 @@ export default function SpeedDialMenu() {
     await uploadFile(currentUser.uid,folderId, File, meta)
     dispatch(snackOn({type:"error",message:"file Uploaded"}))
     setFile(null)
+    dispatch(refresh())
   }
 
   React.useEffect(() => {
