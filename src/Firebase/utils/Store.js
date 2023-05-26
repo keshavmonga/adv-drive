@@ -81,11 +81,6 @@ export const createFolder = async (uid, metadata, folderId) => {
 // }
 
 export const getUserData = async (uid, fid) => {
-    const querySnapshot = await getDocs(collection(db, "users", uid, "folders", fid, "data"));
-    let data = []
-    querySnapshot.forEach((doc) => {
-        data.push(doc.data())
-    });
     let folders = []
     const q = query(collection(db, "users", uid, "folders"), where("idx", "==", fid.toString()));
     const query1 = await getDocs(q);
@@ -95,6 +90,11 @@ export const getUserData = async (uid, fid) => {
             folders.push(snap.data())
 
         })
+    });
+    const querySnapshot = await getDocs(collection(db, "users", uid, "folders", fid, "data"));
+    let data = []
+    querySnapshot.forEach((doc) => {
+        data.push(doc.data())
     });
     console.log(data, folders)
     return [data, folders]
