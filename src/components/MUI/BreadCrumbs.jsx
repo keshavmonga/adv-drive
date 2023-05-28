@@ -26,41 +26,41 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 
 
 export default function CustomizedBreadcrumbs() {
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { path, pathName } = useSelector((state) => state.path.value)
 
-  const handleClick = (i)=> {
-    const newPath = path.slice(0,i+1)
-    const newPathName = pathName.slice(0,i+1)
-    dispatch(updatePath({path:newPath,pathName:newPathName}))
+  const handleClick = (i) => {
+    const newPath = path.slice(0, i + 1)
+    const newPathName = pathName.slice(0, i + 1)
+    dispatch(updatePath({ path: newPath, pathName: newPathName }))
     navigate(`/home/folder/${path[i]}`)
   }
 
   const handleHome = () => {
-    dispatch(updatePath({path:[],pathName:[]}))
+    dispatch(updatePath({ path: [], pathName: [] }))
     navigate(`/home`)
   }
 
   return (
-    <div role="presentation" style={{background:'black'}}>
-      <Breadcrumbs aria-label="breadcrumb" sx={{height:'3rem' , marginTop:8 , borderTop:'1px solid #8739F9', borderBottom:'1px solid #8739F9'}}>
+    <div role="presentation" style={{ background: 'black' }}>
+      <Breadcrumbs aria-label="breadcrumb" sx={{ height: '3rem', marginTop: 8, borderTop: '1px solid #8739F9', borderBottom: '1px solid #8739F9' }}>
         <StyledBreadcrumb
-          sx={pathName.length===0?{backgroundColor: emphasize("#dcdbdb94", 0.05)}:{}}
+          sx={pathName.length === 0 ? { backgroundColor: emphasize("#dcdbdb94", 0.05) } : {}}
           component="a"
           onClick={handleHome}
           label="Home"
           icon={<HomeIcon fontSize="small" />}
         />
-        {pathName.map((name , i ) => (
-        <StyledBreadcrumb
-        sx={i===pathName.length-1?{backgroundColor: emphasize("#dcdbdb94", 0.05)}:{}}
-          key={name}
-          onClick={() => { handleClick(i) }}
-          label={name}
-          component="a"
-        />))}
+        {pathName.map((name, i) => (
+          <StyledBreadcrumb
+            sx={i === pathName.length - 1 ? { backgroundColor: emphasize("#dcdbdb94", 0.05) } : {}}
+            key={name}
+            onClick={() => { handleClick(i) }}
+            label={name}
+            component="a"
+          />))}
       </Breadcrumbs>
     </div>
   );

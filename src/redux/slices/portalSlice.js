@@ -3,15 +3,22 @@ import { createSlice } from '@reduxjs/toolkit'
 export const portalSlice = createSlice({
   name: 'portal',
   initialState: {
-    value: false,
+    value: {
+      rename:false,
+      create:false,
+    },
   },
   reducers: {
-    toggle: (state) => {
-        state.value=!state.value;
+    portalOff: (state) => {
+        state.value={rename:false,create:false};
     },
+    portalOn: (state,param) => {
+      const { payload } = param;
+      state.value={...payload};
+  },
   },
 })
 
-export const { toggle } = portalSlice.actions
+export const { portalOff , portalOn } = portalSlice.actions
 
 export default portalSlice.reducer

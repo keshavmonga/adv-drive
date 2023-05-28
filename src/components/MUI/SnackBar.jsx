@@ -41,6 +41,7 @@ export default function DirectionSnackbar() {
       <Snackbar
         open={open}
         onClose={handleClose}
+        autoHideDuration={2000}
         TransitionComponent={transition}
         message="I love snacks"
         key={transition ? transition.name : ''}

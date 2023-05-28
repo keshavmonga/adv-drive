@@ -5,6 +5,7 @@ import pathReducer from './slices/pathSlice'
 import snackReducer from './slices/snackSlice'
 import fetchedDataReducer from './slices/fetchedDataSlice'
 import updateSliceReducer from './slices/updateSlice'
+import selectedDataReducer from './slices/selectedDataSlice'
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     snack:snackReducer,
     fetchedData:fetchedDataReducer,
     update:updateSliceReducer,
+    selectedData:selectedDataReducer
   },
 })

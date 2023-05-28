@@ -16,6 +16,13 @@ export { AiFillEdit as Edit, AiFillDelete as Delete } from 'react-icons/ai'
 export { BsFillShareFill as Share } from 'react-icons/bs'
 export { MdFavoriteBorder as Favorite } from 'react-icons/md'
 
+//exporting MUI icons
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Logout from '@mui/icons-material/Logout';
+
+
+export { MoreVertIcon as VerticalMenu , Logout }
+
 
 export const fileIcons = {
     html: [<Html />, "orange"],

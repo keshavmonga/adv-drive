@@ -12,7 +12,7 @@ export const snackSlice = createSlice({
         state.value=[true,type,message];
     },
     snackOff: (state) => {
-        state.value=[false,"success","msg"];
+        state.value=[false,state.value[1],state.value[2]];
     },
   },
 })

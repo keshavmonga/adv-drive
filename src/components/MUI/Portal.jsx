@@ -6,27 +6,36 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useSelector, useDispatch } from 'react-redux'
-import { toggle } from '../../redux/slices/portalSlice'
+import { portalOff } from '../../redux/slices/portalSlice'
 import { refresh } from '../../redux/slices/updateSlice';
+import { loading } from '../../redux/slices/loaderSlice';
+import { snackOn } from '../../redux/slices/snackSlice';
 
-export default function Portal({placeholder , fn , title}) {
+export default function Portal({ placeholder, fn, title }) {
 
-  const open = useSelector((state) => state.portal.value)
+  const msg = title.split(' ')[0]
+  const snackMsg = `${msg}d`
+
+  const open = msg.toLowerCase() === 'create'
+    ? useSelector((state) => state.portal.value?.create)
+    : useSelector((state) => state.portal.value?.rename)
+
   const [name, setName] = React.useState("");
 
   const dispatch = useDispatch()
 
-  const msg = title.split(' ')[0]
 
   const handleClose = () => {
-    dispatch(toggle());
+    dispatch(portalOff());
   };
 
   const handleClick = async () => {
+    dispatch(loading(true))
     await fn(name)
     setName("")
     dispatch(refresh())
-    dispatch(toggle())
+    dispatch(snackOn({ type: "success", message: snackMsg }))
+    dispatch(portalOff())
   };
 
   return (

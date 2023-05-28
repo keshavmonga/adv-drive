@@ -41,7 +41,7 @@ export const uploadFile = async (uid, fid, file, metadata) => {
     const url = await getDownloadURL(storageRef)
     await setDoc(getFileRef(uid, fid.toString(), time.toString()), {
         ...metadata,
-        displayName: getFileExtension(metadata.name)[0],
+        name: getFileExtension(metadata.name)[0],
         ext: getFileExtension(metadata.name)[1],
         downloadUrl: url,
         idx: time.toString(),
@@ -125,7 +125,7 @@ export const deleteFolder = async (uid, fid, parent) => {
     const folderSnapshot = await getDoc(folderRef)
 
     folderSnapshot?.data()?.includes?.forEach(async (inc) => {
-        deleteFolder(uid, inc , fid)
+        deleteFolder(uid, inc, fid)
     })
     return await deleteDoc(folderRef);
     // return await deleteFile(uid, did);
@@ -138,10 +138,11 @@ export const updateUserData = async (uid, did, data) => {
     });
 }
 
-export const renameDoc = async (uid, fid, did, ext , data) => {
-    let ref;
-    if(ext==='folder'){ ref = getFolderRef(uid , fid) }
-    else{ref = getFileRef(uid ,fid ,  did)}
+export const renameDoc = async (uid, did, parent, ext, data) => {
+    const ref = ext === 'folder'
+        ? getFolderRef(uid, did)
+        : getFileRef(uid, parent, did)
+
     await updateDoc(ref, {
         name: data
     });

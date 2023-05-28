@@ -7,7 +7,7 @@ import UploadIcon from '@mui/icons-material/Upload';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import { useStore, getcurrentUser } from '@FireContext';
 import { useSelector, useDispatch } from 'react-redux'
-import { toggle } from '../../redux/slices/portalSlice'
+import { portalOn } from '../../redux/slices/portalSlice'
 import { snackOn, snackOff } from '../../redux/slices/snackSlice'
 import { loading } from '../../redux/slices/loaderSlice';
 import Portal from './Portal';
@@ -34,7 +34,7 @@ export default function SpeedDialMenu() {
   
   const actions = [
     { icon: <UploadIcon />, name: 'Upload', action: () => { inputRef.current.click() } },
-    { icon: <CreateNewFolderIcon />, name: 'New Folder', action: () => { dispatch(toggle()) } },
+    { icon: <CreateNewFolderIcon />, name: 'New Folder', action: () => { dispatch(portalOn({create:true,rename:false})) } },
   ];
 
   const handle = () => setOpen((prev) => !prev);

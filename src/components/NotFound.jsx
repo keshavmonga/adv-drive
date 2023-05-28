@@ -6,7 +6,7 @@ const NotFound = () => {
     console.log(a)
   return (
     <div>
-      A
+      {/* 404 Not Found */}
     </div>
   )
 }
