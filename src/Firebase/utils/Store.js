@@ -5,6 +5,16 @@ import { getFirestore, doc, setDoc, getDoc, collection, getDocs, where, query, d
 const db = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
+const getFileRef = (uid, folderId, documentId) =>
+    doc(db, "users", uid, "folders", folderId.toString(), 'data', documentId.toString())
+
+const getFolderRef = (uid, folderId) =>
+    doc(db, "users", uid, "folders", folderId.toString())
+
+const getFilesRef = (uid, fid) =>
+    collection(db, "users", uid, "folders", fid, "data")
+
+
 function getFileExtension(filename) {
     const name = filename?.substring(0, filename.lastIndexOf('.'));
     const extension = filename?.substring(filename.lastIndexOf('.') + 1, filename.length);
@@ -29,7 +39,7 @@ export const uploadFile = async (uid, fid, file, metadata) => {
     // .then((metadata) => {
     // })
     const url = await getDownloadURL(storageRef)
-    await setDoc(doc(db, "users", uid, "folders", fid.toString(), 'data', time.toString()), {
+    await setDoc(getFileRef(uid, fid.toString(), time.toString()), {
         ...metadata,
         displayName: getFileExtension(metadata.name)[0],
         ext: getFileExtension(metadata.name)[1],
@@ -54,47 +64,35 @@ export const checkHomeDir = async (uid) => {
     }
 }
 
-export const createFolder = async (uid, metadata, folderId) => {
+export const createFolder = async (uid, name, folderId) => {
     const date = new Date();
     const time = date.getTime()
-    const newRef = doc(db, "users", uid, 'folders', time.toString())
-    await setDoc(doc(db, "users", uid, 'folders', time.toString()), {
+
+    await setDoc(getFolderRef(uid, time.toString()), {
         idx: time.toString(),
-        name: metadata.name,
+        name,
         createdOn: date,
         ext: 'folder',
     });
-    await updateDoc(doc(db, "users", uid, "folders", folderId.toString()),
+
+    await updateDoc(getFolderRef(uid, folderId.toString()),
         {
-            includes: arrayUnion(newRef)
+            includes: arrayUnion(time.toString())
         });
 }
 
-// export const getCurrentFolder = async (uid, fid) => {
-//     const q = query(collection(db, "users", uid, "folders"), where("idx", "==", fid.toString()));
-//     let data = []
-//     const querySnapshot = await getDocs(q);
-//     querySnapshot.forEach((doc) => {
-//         data.push(doc.data())
-//     });
-//     return [data[0]?.path, data[0]?.pathName];
-// }
-
 export const getUserData = async (uid, fid) => {
     let folders = []
-    const q = query(collection(db, "users", uid, "folders"), where("idx", "==", fid.toString()));
-    const query1 = await getDocs(q);
-    query1 && query1?.forEach((doc) => {
-        doc?.data()?.includes?.forEach(async(inc)=> {
-            const snap = await getDoc(inc);
-            folders.push(snap.data())
-
-        })
-    });
-    const querySnapshot = await getDocs(collection(db, "users", uid, "folders", fid, "data"));
     let data = []
+    const query1 = await getDoc(getFolderRef(uid, fid.toString()))
+    query1?.data()?.includes?.forEach(async (inc) => {
+        const snap = await getDoc(getFolderRef(uid, inc))
+        folders.push(snap?.data())
+    })
+
+    const querySnapshot = await getDocs(getFilesRef(uid, fid));
     querySnapshot.forEach((doc) => {
-        data.push(doc.data())
+        data?.push(doc?.data())
     });
     console.log(data, folders)
     return [data, folders]
@@ -111,13 +109,25 @@ export const getUserProfile = async (uid) => {
     }
 }
 
-export const deleteUserData = async (uid, fid, did) => {
-    await deleteDoc(doc(db, "users", uid, "folders", fid.toString(), 'data', did.toString()));
-    return await deleteFile(uid, did);
+export const deleteUserFile = async (uid, fid, did) => {
+    await deleteDoc(getFileRef(uid, fid.toString(), did.toString()));
+    // return await deleteFile(uid, did);
 }
 
-export const deleteFolder = async (uid, fid) => {
-    return await deleteDoc(doc(db, "users", uid, "folders", fid.toString()));
+export const deleteFolder = async (uid, fid, parent) => {
+    const folderRef = getFolderRef(uid, fid)
+
+    await updateDoc(getFolderRef(uid, parent.toString()),
+        {
+            includes: arrayRemove(fid.toString())
+        });
+
+    const folderSnapshot = await getDoc(folderRef)
+
+    folderSnapshot?.data()?.includes?.forEach(async (inc) => {
+        deleteFolder(uid, inc , fid)
+    })
+    return await deleteDoc(folderRef);
     // return await deleteFile(uid, did);
 }
 
@@ -125,5 +135,14 @@ export const updateUserData = async (uid, did, data) => {
     const Ref = doc(db, "users", uid, "userData", did.toString());
     await updateDoc(Ref, {
         isFavorite: data
+    });
+}
+
+export const renameDoc = async (uid, fid, did, ext , data) => {
+    let ref;
+    if(ext==='folder'){ ref = getFolderRef(uid , fid) }
+    else{ref = getFileRef(uid ,fid ,  did)}
+    await updateDoc(ref, {
+        name: data
     });
 }

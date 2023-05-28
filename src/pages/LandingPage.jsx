@@ -23,12 +23,13 @@ const LandingPage = () => {
         <div className="left">
           <div className="gradient" />
           <h1>Welcome to MyDrive.</h1>
-          <p style={{ color: '#8739F9', textAlign: 'center' }}>Fast & Secure</p>
-          <h3>Here you can upload all your files free of cost and access them from anywhere anytime.</h3>
-            <GoogleButton onClick={handleClick} />  
-        </div>
-        <div className="right">
-          <img style={{ marginRight: '2rem' }} src={upload} alt="" width='500px' />
+          <p style={{ color: '#8739F9', textAlign: 'center' }}>
+            Fast & Secure
+          </p>
+          <h3>
+            Here you can upload all your files free of cost and access them from anywhere anytime.
+          </h3>
+          <GoogleButton onClick={handleClick} />
         </div>
       </div>
     </>

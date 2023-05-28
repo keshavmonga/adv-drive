@@ -35,8 +35,11 @@ export default function FileHeader() {
         <>
             <Box sx={{ width: '100%', margin: 'auto' }}>
                 <Grid container justifyContent="center" rowSpacing={1} sx={gridSX} columnSpacing={{ xs: 1, sm: 2, md: 1 }}>
-                    <Grid xs md={4.5} onClick={()=>{console.log("object")}}>
-                        <Item sx={sx}>name</Item></Grid>
+                    <Grid xs={1} md={1} >
+                    </Grid>
+                    <Grid xs md={3.5} >
+                        <Item sx={{ ...sx, justifyContent: 'start' }}>name</Item>
+                    </Grid>
                     <Grid xs md display={responsive}>
                         <Item sx={sx}>size</Item>
                     </Grid>

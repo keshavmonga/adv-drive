@@ -1,15 +1,16 @@
 import { createBrowserRouter, RouterProvider, Navigate , useNavigate } from "react-router-dom";
 import { Home, LandingPage } from '@pages';
 import { getcurrentUser } from "@FireContext";
-import { useEffect } from "react";
 import { NotFound } from "./components";
 
 const App = () => {
   const currentUser = getcurrentUser();
+
   const ProtectedRoute = ({ children }) => {
     if ( currentUser ) { return children }
     return <Navigate to="/" />
   }
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -26,7 +27,6 @@ const App = () => {
       ],
     },
   ]);
-
 
   return (
     <RouterProvider router={router} />

@@ -5,10 +5,10 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import UploadIcon from '@mui/icons-material/Upload';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
-import { useStore , getcurrentUser } from '@FireContext';
+import { useStore, getcurrentUser } from '@FireContext';
 import { useSelector, useDispatch } from 'react-redux'
 import { toggle } from '../../redux/slices/portalSlice'
-import { snackOn , snackOff } from '../../redux/slices/snackSlice'
+import { snackOn, snackOff } from '../../redux/slices/snackSlice'
 import { loading } from '../../redux/slices/loaderSlice';
 import Portal from './Portal';
 import { refresh } from '../../redux/slices/updateSlice';
@@ -17,21 +17,25 @@ import { useParams } from 'react-router-dom';
 
 export default function SpeedDialMenu() {
 
-  const currentUser = getcurrentUser();
-  let { folderId } = useParams();
-
-  if (folderId === undefined) { folderId = "home" }
-
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = React.useState(null);
   const [meta, setMeta] = React.useState({});
 
-  const { uploadFile  } = useStore();
+  const currentUser = getcurrentUser();
+  const { uploadFile, createFolder } = useStore();
 
-  const portal = useSelector((state) => state.portal.value)
+  let { folderId } = useParams();
+  if (folderId === undefined) { folderId = "home" }
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const inputRef = React.useRef();
+
+  const acceptedTypes = ".html , .css , .js , .png , .jpg , .jpeg , .ipynb , .xml , .py , .cpp, .php";
+  
+  const actions = [
+    { icon: <UploadIcon />, name: 'Upload', action: () => { inputRef.current.click() } },
+    { icon: <CreateNewFolderIcon />, name: 'New Folder', action: () => { dispatch(toggle()) } },
+  ];
 
   const handle = () => setOpen((prev) => !prev);
 
@@ -46,26 +50,35 @@ export default function SpeedDialMenu() {
     })
   }
 
-  const actions = [
-    { icon: <UploadIcon />, name: 'Upload', action: () => { inputRef.current.click() } },
-    { icon: <CreateNewFolderIcon />, name: 'New Folder', action: () => { dispatch(toggle()) } },
-  ];
-
-  const get = async () => {
-    await uploadFile(currentUser.uid,folderId, File, meta)
-    dispatch(snackOn({type:"error",message:"file Uploaded"}))
+  const upload = async () => {
+    await uploadFile(currentUser.uid, folderId, File, meta)
+    dispatch(snackOn({ type: "success", message: "File Uploaded" }))
     setFile(null)
     dispatch(refresh())
   }
 
+  const handleCreate = async (name) => {
+    await createFolder(currentUser.uid, name, folderId)
+  }
+
   React.useEffect(() => {
-    file && get()
+    file && upload()
   }, [file]);
 
   return (
     <>
-      <Portal />
-      <input ref={inputRef} onChange={handleChange} hidden accept=".html , .css , .js , .png , .jpg , .jpeg , .ipynb , .xml , .py , .cpp, .php" type="file" />
+      <Portal
+        placeholder='Enter folder name'
+        title='Create folder'
+        fn={handleCreate}
+      />
+      <input
+        ref={inputRef}
+        onChange={handleChange}
+        hidden 
+        accept={acceptedTypes}
+        type="file"
+      />
       <Backdrop sx={{ position: 'fixed', inset: 0, zIndex: 1000 }} open={open} />
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
@@ -74,7 +87,7 @@ export default function SpeedDialMenu() {
         onClick={handle}
         open={open}
       >
-        {actions.map((action) => (
+        {actions.map(action =>
           <SpeedDialAction
             key={action.name}
             icon={action.icon}
@@ -82,7 +95,7 @@ export default function SpeedDialMenu() {
             tooltipOpen
             onClick={action.action}
           />
-        ))}
+        )}
       </SpeedDial>
     </>
   );

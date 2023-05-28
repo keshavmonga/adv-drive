@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { Navbar, Files, Main } from '@components'
-import { BreadCrumbs } from '@components/MUI'
-import { getcurrentUser , useStore } from '@FireContext'
+import { Navbar, Main } from '@components'
+import { BreadCrumbs, Loader } from '@components/MUI'
+import { getcurrentUser, useStore } from '@FireContext'
 
 const Home = () => {
   const currentUser = getcurrentUser();
@@ -15,7 +15,8 @@ const Home = () => {
       <nav>
         <Navbar name={currentUser?.displayName} img={currentUser?.photoURL} />
       </nav>
-        <BreadCrumbs />
+      <Loader />
+      <BreadCrumbs />
       <Main />
     </>
   )

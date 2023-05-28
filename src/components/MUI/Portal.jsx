@@ -5,34 +5,25 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useStore, getcurrentUser } from '@FireContext';
 import { useSelector, useDispatch } from 'react-redux'
 import { toggle } from '../../redux/slices/portalSlice'
-import { useParams } from 'react-router-dom';
 import { refresh } from '../../redux/slices/updateSlice';
 
-export default function Portal() {
-  let { folderId } = useParams();
-  const { createFolder } = useStore();
-
-  if (folderId === undefined) { folderId = "home" }
+export default function Portal({placeholder , fn , title}) {
 
   const open = useSelector((state) => state.portal.value)
-  
-  let { path,pathName } = useSelector((state) => state.path.value)
   const [name, setName] = React.useState("");
 
   const dispatch = useDispatch()
 
-  const currentUser = getcurrentUser();
+  const msg = title.split(' ')[0]
 
   const handleClose = () => {
-    dispatch(toggle())
+    dispatch(toggle());
   };
 
-  const handleCreate = async () => {
-    if (pathName === undefined) { pathName = "home" }
-    await createFolder(currentUser.uid, { name, path, pathName }, folderId)
+  const handleClick = async () => {
+    await fn(name)
     setName("")
     dispatch(refresh())
     dispatch(toggle())
@@ -41,7 +32,7 @@ export default function Portal() {
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create new folder</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
           <TextField
             onChange={(e) => { setName(e.target.value) }}
@@ -49,7 +40,7 @@ export default function Portal() {
             autoFocus
             margin="dense"
             id="name"
-            label="Enter folder name"
+            label={placeholder}
             type="email"
             fullWidth
             variant="standard"
@@ -57,7 +48,7 @@ export default function Portal() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleCreate}>Create</Button>
+          <Button onClick={handleClick}>{msg}</Button>
         </DialogActions>
       </Dialog>
     </div>

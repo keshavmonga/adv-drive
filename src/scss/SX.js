@@ -31,14 +31,6 @@ export const toggleSX = {
   }
 }
 
-export const FormSX = {
-  display: "flex",
-  justifyContent: "space-between",
-  "flex-direction": "column",
-  p: 3,
-  borderRadius: 8,
-  '& .MuiTextField-root': { m: 1, color: "white" },
-}
 export const SearchSX = {
   height: '2.3rem',
   width: "15rem",
@@ -61,7 +53,7 @@ export const gridSX = {
   '&:hover': {
     cursor: 'pointer',
     background: 'lightgrey',
-    boxShadow: 1,
+    boxShadow: '1',
   }
 }
 export const gridButtonSX = {
