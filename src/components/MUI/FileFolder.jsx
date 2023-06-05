@@ -37,8 +37,14 @@ export default function FileFolder({ metadata }) {
       // handleDownload();
       return;
     }
-    const newPath = [...path, did]
-    const newPathName = [...pathName, name]
+    const newPath = did !== path[path.length - 1]
+      ? [...path, did]
+      : [...path]
+
+    const newPathName = did !== path[path.length - 1]
+      ? [...pathName, name]
+      : [...pathName]
+
     dispatch(updatePath({ path: newPath, pathName: newPathName }))
     navigate(`/home/folder/${did}`)
   }

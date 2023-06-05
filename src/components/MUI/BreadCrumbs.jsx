@@ -3,7 +3,7 @@ import { emphasize, styled } from '@mui/material/styles';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Chip from '@mui/material/Chip';
 import HomeIcon from '@mui/icons-material/Home';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updatePath } from '../../redux/slices/pathSlice';
 
@@ -27,6 +27,8 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 
 export default function CustomizedBreadcrumbs() {
 
+  const folderId = useParams().folderId ?? 'home';
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { path, pathName } = useSelector((state) => state.path.value)
@@ -43,9 +45,24 @@ export default function CustomizedBreadcrumbs() {
     navigate(`/home`)
   }
 
+  React.useEffect(() => {
+    if (folderId !== path[path.length - 1]) {
+      let index = path.indexOf(folderId)
+      let newPath = path.slice(0, index + 1)
+      let newPathName = pathName.slice(0, index + 1)
+      dispatch(updatePath({ path: newPath, pathName: newPathName }))
+    }
+  }, [folderId]);
+
+  React.useEffect(() => {
+    return () => {
+      dispatch(updatePath({ path: [], pathName: [] }))
+    };
+  }, []);
+
   return (
     <div role="presentation" style={{ background: 'black' }}>
-      <Breadcrumbs aria-label="breadcrumb" sx={{ height: '3rem', marginTop: 8, borderTop: '1px solid #8739F9', borderBottom: '1px solid #8739F9' }}>
+      <Breadcrumbs maxItems={5} aria-label="breadcrumb" sx={{ height: '3rem', marginTop: 8, borderTop: '1px solid #8739F9', borderBottom: '1px solid #8739F9' }}>
         <StyledBreadcrumb
           sx={pathName.length === 0 ? { backgroundColor: emphasize("#dcdbdb94", 0.05) } : {}}
           component="a"

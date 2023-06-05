@@ -8,19 +8,15 @@ import { Box } from '@mui/material'
 import arrow from '../assets/arrow.svg'
 import nodata from '../assets/nodata.svg'
 import FileHeader from './MUI/FileHeader.jsx'
-import { snackOff } from '../redux/slices/snackSlice.js'
 
 const Files = () => {
 
   const [data, setdata] = useState(null);
-  const currentUser = getcurrentUser();
-  const { getUserData, renameDoc } = useStore();
-  let { folderId } = useParams();
-
-  if (folderId === undefined) { folderId = 'home' }
-
-  const update = useSelector((state) => state.update.value)
   const { did, ext } = useSelector((state) => state.selectedData.value)
+  const update = useSelector((state) => state.update.value)
+  const { getUserData, renameDoc } = useStore();
+  const currentUser = getcurrentUser();
+  const folderId = useParams().folderId ?? 'home';
   const dispatch = useDispatch();
 
 

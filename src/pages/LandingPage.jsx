@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth, getcurrentUser } from "@FireContext"
 import GoogleButton from 'react-google-button';
-import upload from '../assets/upload.svg';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ const LandingPage = () => {
       <div className="landing-page">
         <div className="left">
           <div className="gradient" />
-          <h1>Welcome to MyDrive.</h1>
+          <h1>Welcome to <span>MyDrive</span>.</h1>
           <p style={{ color: '#8739F9', textAlign: 'center' }}>
             Fast & Secure
           </p>

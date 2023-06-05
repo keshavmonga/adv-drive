@@ -24,17 +24,16 @@ export default function SpeedDialMenu() {
   const currentUser = getcurrentUser();
   const { uploadFile, createFolder } = useStore();
 
-  let { folderId } = useParams();
-  if (folderId === undefined) { folderId = "home" }
+  const folderId = useParams().folderId ?? 'home';
 
   const dispatch = useDispatch();
   const inputRef = React.useRef();
 
   const acceptedTypes = ".html , .css , .js , .png , .jpg , .jpeg , .ipynb , .xml , .py , .cpp, .php";
-  
+
   const actions = [
     { icon: <UploadIcon />, name: 'Upload', action: () => { inputRef.current.click() } },
-    { icon: <CreateNewFolderIcon />, name: 'New Folder', action: () => { dispatch(portalOn({create:true,rename:false})) } },
+    { icon: <CreateNewFolderIcon />, name: 'New Folder', action: () => { dispatch(portalOn({ create: true, rename: false })) } },
   ];
 
   const handle = () => setOpen((prev) => !prev);
@@ -75,15 +74,16 @@ export default function SpeedDialMenu() {
       <input
         ref={inputRef}
         onChange={handleChange}
-        hidden 
+        hidden
         accept={acceptedTypes}
         type="file"
       />
       <Backdrop sx={{ position: 'fixed', inset: 0, zIndex: 1000 }} open={open} />
       <SpeedDial
+        FabProps={{sx:{background:'#8739f9'}}}
         ariaLabel="SpeedDial tooltip example"
         sx={{ position: 'fixed', bottom: 64, right: 64 }}
-        icon={<SpeedDialIcon />}
+        icon={<SpeedDialIcon/>}
         onClick={handle}
         open={open}
       >
