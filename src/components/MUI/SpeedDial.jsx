@@ -80,10 +80,10 @@ export default function SpeedDialMenu() {
       />
       <Backdrop sx={{ position: 'fixed', inset: 0, zIndex: 1000 }} open={open} />
       <SpeedDial
-        FabProps={{sx:{background:'#8739f9'}}}
+        FabProps={{ sx: { background: '#8739f9', '&:hover': { background: '#662abe' } } }}
         ariaLabel="SpeedDial tooltip example"
         sx={{ position: 'fixed', bottom: 64, right: 64 }}
-        icon={<SpeedDialIcon/>}
+        icon={<SpeedDialIcon />}
         onClick={handle}
         open={open}
       >
