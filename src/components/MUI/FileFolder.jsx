@@ -22,7 +22,7 @@ import { updateSelectedData } from '../../redux/slices/selectedDataSlice';
 export default function FileFolder({ metadata }) {
 
   const { path, pathName } = useSelector((state) => state.path.value)
-  const { deleteFolder, deleteUserFile, renameDoc } = useStore();
+  const { deleteFolder, deleteUserFile } = useStore();
 
   const parent = path[path.length - 1] ?? 'home'
 
@@ -50,7 +50,7 @@ export default function FileFolder({ metadata }) {
   const handleFavorite = () => { }
 
 
-  
+
 
 
   const handleDelete = async () => {
@@ -63,7 +63,7 @@ export default function FileFolder({ metadata }) {
   }
 
   const handleRenamePortal = () => {
-    dispatch(updateSelectedData({did,ext}))
+    dispatch(updateSelectedData({ did, ext }))
     dispatch(portalOn({ rename: true, create: false }))
   }
 
