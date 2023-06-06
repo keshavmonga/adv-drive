@@ -89,7 +89,7 @@ export default function FileFolder({ metadata }) {
     <>
       <Grid container sx={gridSX} justifyContent="center" rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }}>
         <Grid xs={3} sm={3} md={1}>
-          <GridItem><Avatar >{type[ext][0] || ext}</Avatar>
+          <GridItem>{type[ext] || ext}
           </GridItem>
         </Grid>
         <Grid xs sm md={3.5}>

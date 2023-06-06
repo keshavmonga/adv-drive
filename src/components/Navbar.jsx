@@ -14,7 +14,7 @@ const Navbar = ({ name, img }) => {
         [
             { icon: <Avatar />, name: 'Profile', action: () => { } },
             { icon: <Avatar />, name: 'My Account', action: () => { } },
-            { icon: <Logout fontSize="small" />, name: 'Logout', action: logOut },
+            { icon: <Logout size='1.35em'/>, name: 'Logout', action: logOut },
         ]
 
     return (

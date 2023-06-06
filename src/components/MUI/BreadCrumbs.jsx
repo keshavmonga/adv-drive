@@ -62,7 +62,7 @@ export default function CustomizedBreadcrumbs() {
 
   return (
     <div role="presentation" style={{ background: 'black' }}>
-      <Breadcrumbs maxItems={5} aria-label="breadcrumb" sx={{ height: '3rem', marginTop: 8, borderTop: '1px solid #8739F9', borderBottom: '1px solid #8739F9' }}>
+      <Breadcrumbs maxItems={4} aria-label="breadcrumb" sx={{ height: '3rem', marginTop: 8, borderTop: '1px solid #8739F9', borderBottom: '1px solid #8739F9' }}>
         <StyledBreadcrumb
           sx={pathName.length === 0 ? { backgroundColor: emphasize("#dcdbdb94", 0.05) } : {}}
           component="a"

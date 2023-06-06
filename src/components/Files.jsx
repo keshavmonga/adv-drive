@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FileFolder, SnackBar, Portal } from '@components/MUI'
+import { FileFolder, SnackBar, Portal, Loader } from '@components/MUI'
 import { useStore, getcurrentUser } from '@FireContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -49,6 +49,7 @@ const Files = () => {
 
   return (
     <>
+      <Loader />
       <Portal
         fn={handleRename}
         placeholder='Enter new name'

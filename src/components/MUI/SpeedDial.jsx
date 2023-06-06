@@ -29,7 +29,7 @@ export default function SpeedDialMenu() {
   const dispatch = useDispatch();
   const inputRef = React.useRef();
 
-  const acceptedTypes = ".html , .css , .js , .png , .jpg , .jpeg , .ipynb , .xml , .py , .cpp, .php";
+  const acceptedTypes = ".html , .css , .js , .png , .jpg , .jpeg , .ipynb , .xml , .py , .cpp, .php, .htm";
 
   const actions = [
     { icon: <UploadIcon />, name: 'Upload', action: () => { inputRef.current.click() } },
@@ -80,7 +80,7 @@ export default function SpeedDialMenu() {
       />
       <Backdrop sx={{ position: 'fixed', inset: 0, zIndex: 1000 }} open={open} />
       <SpeedDial
-        FabProps={{ sx: { background: '#8739f9', '&:hover': { background: '#662abe' } } }}
+        FabProps={{ sx: { background: '#8739F9', '&:hover': { background: '#662abe' } } }}
         ariaLabel="SpeedDial tooltip example"
         sx={{ position: 'fixed', bottom: 64, right: 64 }}
         icon={<SpeedDialIcon />}
