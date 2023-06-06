@@ -21,7 +21,7 @@ const LandingPage = () => {
       <div className="landing-page">
         <div className="left">
           <div className="gradient" />
-          <h1>Welcome to <span>MyDrive</span>.</h1>
+          <h1>Welcome to <span className="orange_gradient">MyDrive</span>.</h1>
           <p style={{ color: '#8739F9', textAlign: 'center' }}>
             Fast & Secure
           </p>

@@ -65,15 +65,21 @@ body {
   gap: 1rem;
 }
 .landing-page .left h1 {
-  font-size: 4rem;
+  display: inline-block;
+  text-align: center;
+  font-size: 3rem;
+  width: 100%;
 }
 .landing-page .left p {
   font-size: xx-large;
+  width: 100%;
 }
 .landing-page .left h3 {
+  text-align: center;
   font-weight: 100;
   width: 35rem;
   margin-bottom: 2rem;
+  width: 100%;
 }
 
 .form-container {
@@ -147,4 +153,11 @@ nav .r_nav {
   border: none;
   text-align: left;
   cursor: pointer;
+}
+
+.orange_gradient {
+  background-image: linear-gradient(to right, #FFC107, #FB8C00, #FFEB3B);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
 }/*# sourceMappingURL=App.css.map */
